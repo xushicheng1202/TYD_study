@@ -5,6 +5,7 @@
       <w>creditcard</w>
       <w>descr</w>
       <w>graphviz</w>
+      <w>jieba</w>
       <w>kfold</w>
       <w>liblinear</w>
       <w>ndarray</w>
