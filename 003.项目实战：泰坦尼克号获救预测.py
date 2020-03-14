@@ -34,8 +34,8 @@ for train, test in kf.split(titanic):
     predictions.append(test_predictions)
 # 查看线性回归准确率
 predictions = np.concatenate(predictions, axis=0)
-predictions[predictions > .5] = 1
-predictions[predictions <= .5] = 0
+predictions[predictions > 0.5] = 1
+predictions[predictions <= 0.5] = 0
 accuracy = sum(predictions == titanic['Survived']) / len(predictions)
 print(accuracy)
 
