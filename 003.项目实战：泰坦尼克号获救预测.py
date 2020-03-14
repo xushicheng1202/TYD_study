@@ -3,6 +3,8 @@ from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.model_selection import KFold, cross_val_score
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectKBest, f_classif
+import matplotlib.pyplot as plt
 
 titanic = pandas.read_csv('DATA/泰坦尼克船员获救/titanic_train.csv')
 print(titanic.describe())
@@ -54,3 +56,10 @@ alg = RandomForestClassifier(random_state=1, n_estimators=100, min_samples_split
 kf = KFold(n_splits=3, shuffle=False)
 scores = cross_val_score(alg, titanic[predictors], titanic['Survived'], cv=kf)
 print(scores.mean())
+
+selector = SelectKBest(f_classif, k=5)
+selector.fit(titanic[predictors], titanic['Survived'])
+scores = -np.log10(selector.pvalues_)
+plt.bar(range(len(predictors)), scores)
+plt.xticks(range(len(predictors)), predictors, rotation='vertical')
+plt.show()
