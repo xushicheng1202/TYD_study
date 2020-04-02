@@ -1,5 +1,5 @@
-from graphviz import Digraph
+from __future__ import print_function
+import torch
 
-dot = Digraph(comment='The Round Table')
-dot.node('A', 'king')
-dot.view()
+x = torch.zeros(5, 3, dtype=torch.long)
+print(x)
