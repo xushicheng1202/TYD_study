@@ -1,7 +1,9 @@
-import re, collections
+import re
+import collections
 
 
-def words(text): return re.findall('[a-z]+', text.lower())  # 去掉其他除了a到z以外的字符
+def words(text):
+    return re.findall('[a-z]+', text.lower())  # 去掉其他除了a到z以外的字符
 
 
 def train(features):
@@ -11,7 +13,7 @@ def train(features):
     return model
 
 
-NWORDS = train(words(open('big.txt').read()))
+N_WORDS = train(words(open('big.txt').read()))
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -25,16 +27,16 @@ def edits1(word):
 
 
 def known_edits2(word):
-    return set(e2 for e1 in edits1(word) for e2 in edits1(e1) if e2 in NWORDS)
+    return set(e2 for e1 in edits1(word) for e2 in edits1(e1) if e2 in N_WORDS)
 
 
 def known(words):
-    return set(w for w in words if w in NWORDS)
+    return set(w for w in words if w in N_WORDS)
 
 
 def correct(word):
     candidates = known([word]) or known(edits1(word)) or known_edits2(word) or [word]
-    print(max(candidates, key=lambda w: NWORDS[w]))
+    print(max(candidates, key=lambda w: N_WORDS[w]))
 
 
 a = input('输入字符：')
