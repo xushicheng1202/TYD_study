@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy
 import jieba
 
 df_news = pd.read_table('DATA/新闻分类任务/val.txt', names=['category', 'theme', 'URL', 'content'], encoding='utf-8')
@@ -8,7 +9,7 @@ print(df_news.shape)
 
 # 将新闻内容转换为list方便进行分词并查看第1000条数据内容
 content = df_news.content.values.tolist()
-print(content[1000])
+print(content[1])
 
 # 下面使用jieba库进行分词
 content_s = []
@@ -16,7 +17,7 @@ for line in content:
     current_segment = jieba.lcut(line)
     if len(current_segment) > 1 and current_segment != '\r\n':
         content_s.append(current_segment)
-print(content_s[1000])
+print(content_s[1])
 
 # 转为pandas支持的DataFrame格式
 df_content = pd.DataFrame({'content_s': content_s})
@@ -48,3 +49,10 @@ stopwords = stopwords.stopword.values.tolist()
 contents_clean, all_words = drop_stopwords(contents, stopwords)  # 得到删除停用词后的新闻以及词云数据
 df_content = pd.DataFrame({'contents_clean': contents_clean})
 print(df_content)
+
+# 统计所有词
+df_all_words = pd.DataFrame({'all_words': all_words})
+print(df_all_words.head())
+words_count = df_all_words.groupby(by=['all_words'])['all_words'].agg({"count": numpy.size})
+# words_count = words_count.reset_index().sort_values(by=["count"], ascending=False)
+# words_count.head()
