@@ -2,6 +2,7 @@
   <dictionary name="XUSC">
     <words>
       <w>mnist</w>
+      <w>randn</w>
     </words>
   </dictionary>
 </component>
